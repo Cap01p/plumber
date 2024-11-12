@@ -1,0 +1,86 @@
+---
+interface Plumber {
+	name: string;
+	phone: string;
+	email: string;
+	rating: string;
+	specialty: string;
+}
+
+interface Props {
+	plumbers: Plumber[];
+}
+
+const { plumbers } = Astro.props;
+---
+
+<div class="table-wrapper">
+	<table class="comparison-table">
+		<thead>
+			<tr>
+				<th>Company Name</th>
+				<th>Phone Number</th>
+				<th>Contact Email</th>
+				<th>Rating</th>
+				<th>Reviews</th>
+			</tr>
+		</thead>
+		<tbody>
+			{plumbers.map(plumber => (
+				<tr>
+					<td>{plumber.name}</td>
+					<td><a href={`tel:${plumber.phone.replace(/[()-\s]/g, '')}`}>{plumber.phone}</a></td>
+					<td>{plumber.email}</td>
+					<td>{plumber.rating}/5.0</td>
+					<td>{plumber.specialty}</td>
+				</tr>
+			))}
+		</tbody>
+	</table>
+</div>
+
+<style>
+	.table-wrapper {
+		overflow-x: auto;
+		margin-top: 2rem;
+		border-radius: 8px;
+		box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	}
+
+	.comparison-table {
+		width: 100%;
+		border-collapse: collapse;
+		background: white;
+	}
+
+	.comparison-table th,
+	.comparison-table td {
+		padding: 1rem;
+		text-align: left;
+		border-bottom: 1px solid #e5e7eb;
+	}
+
+	.comparison-table th {
+		background: var(--water-blue);
+		color: white;
+	}
+
+	.comparison-table tr:hover {
+		background: #f3f4f6;
+	}
+
+	.comparison-table a {
+		color: var(--primary);
+		text-decoration: none;
+	}
+
+	.comparison-table a:hover {
+		text-decoration: underline;
+	}
+
+	@media (max-width: 768px) {
+		.comparison-table {
+			font-size: 0.9rem;
+		}
+	}
+</style>
